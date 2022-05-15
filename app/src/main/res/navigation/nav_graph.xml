@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/handlerFragment">
+
+    <fragment
+        android:id="@+id/handlerFragment"
+        android:name="com.kaano8.androidcore.handler.HandlerFragment"
+        android:label="fragment_handler"
+        tools:layout="@layout/fragment_handler" />
+</navigation>
