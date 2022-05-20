@@ -39,8 +39,6 @@ class HandlerFragment : Fragment() {
         // worked = SimpleWorker()
         worker = Worker()
         setupWorker()
-
-
     }
 
     private fun setupHandler() {

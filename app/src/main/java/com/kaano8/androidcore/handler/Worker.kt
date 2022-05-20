@@ -5,7 +5,7 @@ import android.os.HandlerThread
 
 class Worker: HandlerThread(TAG) {
 
-    private lateinit var handler: Handler
+    private var handler: Handler
 
     init {
         start()
