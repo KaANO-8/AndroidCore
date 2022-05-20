@@ -1,8 +1,9 @@
 package com.kaano8.androidcore.backgroundthread.repository
 
+import android.util.Log
 import java.util.concurrent.Executor
 
-class Repository {
+class Repository(private val executor: Executor) {
 
     sealed class Result<out R> {
         data class Success<out T>(val data: T) : Result<T>()
@@ -11,7 +12,9 @@ class Repository {
     }
 
     fun makeRequest(callback: (Result<String>) -> Unit) {
-        Executor {
+        Log.d("Repository", "makeRequest: ${Thread.currentThread().name }")
+        executor.execute {
+            Log.d("Repository", "makeRequest: ${Thread.currentThread().id}")
             callService()
             callback(Result.Success("Success"))
         }
