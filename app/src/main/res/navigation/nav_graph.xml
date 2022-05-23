@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/backgroundThread">
+    app:startDestination="@id/blurFragment">
 
     <fragment
         android:id="@+id/handlerFragment"
@@ -15,4 +15,8 @@
         android:name="com.kaano8.androidcore.backgroundthread.BackgroundThread"
         android:label="fragment_background_thread"
         tools:layout="@layout/fragment_background_thread" />
+    <fragment
+        android:id="@+id/blurFragment"
+        android:name="com.kaano8.androidcore.com.kaano8.androidcore.workmanager.BlurFragment"
+        android:label="BlurFragment" />
 </navigation>

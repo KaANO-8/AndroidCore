@@ -16,6 +16,7 @@ class Repository(private val executor: Executor) {
         executor.execute {
             Log.d("Repository", "makeRequest: ${Thread.currentThread().id}")
             callService()
+            // We can use handler of main thread to post results also
             callback(Result.Success("Success"))
         }
     }
