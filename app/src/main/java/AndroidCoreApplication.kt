@@ -7,7 +7,6 @@ import java.util.concurrent.Executors
 
 class AndroidCoreApplication : Application() {
 
-    // setup dagger here later
 
     companion object {
         private lateinit var executorService: ExecutorService
