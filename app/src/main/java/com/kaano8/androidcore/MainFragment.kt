@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.kaano8.androidcore.com.kaano8.androidcore.adapter.MainAdapter
-import com.kaano8.androidcore.com.kaano8.androidcore.adapter.data.MainDataHolder
+import com.kaano8.androidcore.com.kaano8.androidcore.adapter.data.MainListData
 import com.kaano8.androidcore.databinding.FragmentMainBinding
 
 
@@ -31,28 +33,33 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding?.recyclerView?.adapter = mainAdapter
+        val itemDecorator = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+        binding?.recyclerView?.apply {
+            adapter = mainAdapter
+            addItemDecoration(itemDecorator)
+        }
         mainAdapter.submitList(prepareList())
     }
 
-    private fun prepareList(): List<MainDataHolder> {
-        val list = mutableListOf<MainDataHolder>()
+    private fun prepareList(): List<MainListData> {
+        val list = mutableListOf<MainListData>()
 
         list.apply {
+            add(MainListData.HeaderItem(header = "Background"))
             add(
-                MainDataHolder(
+                MainListData.DataItem(
                     title = "Background threads",
                     detail = "All about background threads",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_backgroundThread) })
             )
             add(
-                MainDataHolder(
+                MainListData.DataItem(
                     title = "Android handlers",
                     detail = "All about android handlers",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_handlerFragment) })
             )
             add(
-                MainDataHolder(
+                MainListData.DataItem(
                     title = "Work Manager",
                     detail = "Work manager in action",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_blurFragment) })
