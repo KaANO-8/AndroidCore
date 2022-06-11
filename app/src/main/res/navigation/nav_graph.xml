@@ -21,7 +21,7 @@
         android:label="BlurFragment" />
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.kaano8.androidcore.MainFragment"
+        android:name="com.kaano8.androidcore.com.kaano8.androidcore.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
@@ -33,5 +33,12 @@
         <action
             android:id="@+id/action_mainFragment_to_backgroundThread"
             app:destination="@id/backgroundThread" />
+        <action
+            android:id="@+id/action_mainFragment_to_diffUtilFragment"
+            app:destination="@id/diffUtilFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/diffUtilFragment"
+        android:name="com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.DiffUtilFragment"
+        android:label="DiffUtilFragment" />
 </navigation>

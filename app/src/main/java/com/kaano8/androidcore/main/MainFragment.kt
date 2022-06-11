@@ -1,4 +1,4 @@
-package com.kaano8.androidcore
+package com.kaano8.androidcore.com.kaano8.androidcore.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
+import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.adapter.MainAdapter
 import com.kaano8.androidcore.com.kaano8.androidcore.adapter.data.MainListData
 import com.kaano8.androidcore.databinding.FragmentMainBinding
-
 
 class MainFragment : Fragment() {
 
@@ -37,6 +36,7 @@ class MainFragment : Fragment() {
         binding?.recyclerView?.apply {
             adapter = mainAdapter
             addItemDecoration(itemDecorator)
+            setHasFixedSize(true)
         }
         mainAdapter.submitList(prepareList())
     }
@@ -63,6 +63,13 @@ class MainFragment : Fragment() {
                     title = "Work Manager",
                     detail = "Work manager in action",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_blurFragment) })
+            )
+            add(MainListData.HeaderItem(header = "UI"))
+            add(
+                MainListData.DataItem(
+                    title = "DiffUtil",
+                    detail = "Experiment with RV's diffUtil",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_diffUtilFragment) })
             )
         }
         return list

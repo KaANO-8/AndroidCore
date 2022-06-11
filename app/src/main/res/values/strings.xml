@@ -23,4 +23,8 @@
     <!-- Messages -->
     <string name="set_permissions_in_settings">Go to Settings -> Apps and Notifications ->
         WorkManager Demo -> App Permissions and grant access to Storage.</string>
+
+    <string name="sort_by_name">By name</string>
+    <string name="sort_by_rating">By rating</string>
+    <string name="sort_by_birth">By birth</string>
 </resources>

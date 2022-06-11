@@ -1,4 +1,4 @@
-package com.kaano8.androidcore
+package com.kaano8.androidcore.com.kaano8.androidcore.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
