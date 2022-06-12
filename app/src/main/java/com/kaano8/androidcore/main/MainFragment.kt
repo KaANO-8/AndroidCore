@@ -76,7 +76,7 @@ class MainFragment : Fragment() {
                 MainListData.DataItem(
                     title = "Room",
                     detail = "Experiment with Room database",
-                    action = { findNavController().navigate(R.id.action_mainFragment_to_hilt_WordFragment) })
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_wordFragment) })
             )
         }
         return list

@@ -37,15 +37,33 @@
             android:id="@+id/action_mainFragment_to_diffUtilFragment"
             app:destination="@id/diffUtilFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_hilt_WordFragment"
-            app:destination="@id/hilt_WordFragment" />
+            android:id="@+id/action_mainFragment_to_wordFragment"
+            app:destination="@id/wordFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
         android:name="com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.DiffUtilFragment"
         android:label="DiffUtilFragment" />
     <fragment
-        android:id="@+id/hilt_WordFragment"
-        android:name="com.kaano8.androidcore.room.ui.Hilt_WordFragment"
-        android:label="Hilt_WordFragment" />
+        android:id="@+id/newWordFragment"
+        android:name="com.kaano8.androidcore.room.ui.newword.NewWordFragment"
+        android:label="fragment_new_word"
+        tools:layout="@layout/fragment_new_word" >
+        <argument
+            android:name="newWord"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_newWordFragment_to_wordFragment"
+            app:destination="@id/wordFragment"
+            app:popUpTo="@id/wordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wordFragment"
+        android:name="com.kaano8.androidcore.room.ui.WordFragment"
+        android:label="fragment_word"
+        tools:layout="@layout/fragment_word" >
+        <action
+            android:id="@+id/action_wordFragment_to_newWordFragment"
+            app:destination="@id/newWordFragment" />
+    </fragment>
 </navigation>

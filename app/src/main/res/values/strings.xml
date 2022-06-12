@@ -27,4 +27,9 @@
     <string name="sort_by_name">By name</string>
     <string name="sort_by_rating">By rating</string>
     <string name="sort_by_birth">By birth</string>
+
+    <string name="hint_word">Word...</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="add_word">Add word</string>
 </resources>

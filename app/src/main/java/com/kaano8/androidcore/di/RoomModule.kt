@@ -8,14 +8,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
 class RoomModule {
 
-    @Singleton
     @Provides
-    fun provideWordDao(@ApplicationContext context: Context): WordDao =
-        WordRoomDatabase.getDatabase(context).wordDao()
+    fun provideWordDao(@ApplicationContext context: Context, coroutineScope: CoroutineScope): WordDao =
+        WordRoomDatabase.getDatabase(context, coroutineScope).wordDao()
 }
