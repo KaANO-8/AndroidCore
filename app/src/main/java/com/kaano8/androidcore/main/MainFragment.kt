@@ -71,6 +71,13 @@ class MainFragment : Fragment() {
                     detail = "Experiment with RV's diffUtil",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_diffUtilFragment) })
             )
+            add(MainListData.HeaderItem(header = "Database"))
+            add(
+                MainListData.DataItem(
+                    title = "Room",
+                    detail = "Experiment with Room database",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_hilt_WordFragment) })
+            )
         }
         return list
     }

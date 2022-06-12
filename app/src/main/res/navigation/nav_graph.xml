@@ -36,9 +36,16 @@
         <action
             android:id="@+id/action_mainFragment_to_diffUtilFragment"
             app:destination="@id/diffUtilFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_hilt_WordFragment"
+            app:destination="@id/hilt_WordFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
         android:name="com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.DiffUtilFragment"
         android:label="DiffUtilFragment" />
+    <fragment
+        android:id="@+id/hilt_WordFragment"
+        android:name="com.kaano8.androidcore.room.ui.Hilt_WordFragment"
+        android:label="Hilt_WordFragment" />
 </navigation>
