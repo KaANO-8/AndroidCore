@@ -12,6 +12,7 @@ import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.room.entity.Word
 import com.kaano8.androidcore.com.kaano8.androidcore.room.ui.adapter.WordListAdapter
 import com.kaano8.androidcore.databinding.FragmentWordBinding
+import com.kaano8.androidcore.room.ui.newword.NewWordFragment.Companion.NEW_WORD
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,6 +38,11 @@ class WordFragment() : Fragment() {
         setupRecyclerView()
         setupObservers()
         setupClickListeners()
+
+        val newWord = arguments?.getString(NEW_WORD)
+        if (newWord?.isNotEmpty() == true)
+            wordViewModel.insert(Word(word = newWord))
+
     }
 
     private fun setupRecyclerView() {
@@ -48,12 +54,14 @@ class WordFragment() : Fragment() {
             // Update the cached copy of the words in the adapter.
             words?.let { wordAdapter.submitList(it) }
         }
-        wordViewModel.insert(   Word(word = arguments?.getString("NEW_WORD") ?: ""))
     }
 
     private fun setupClickListeners() {
-        binding?.fab?.setOnClickListener {
+        binding?.fabAdd?.setOnClickListener {
             findNavController().navigate(R.id.action_wordFragment_to_newWordFragment)
+        }
+        binding?.fabDelete?.setOnClickListener {
+            wordViewModel.deleteAll()
         }
     }
 }

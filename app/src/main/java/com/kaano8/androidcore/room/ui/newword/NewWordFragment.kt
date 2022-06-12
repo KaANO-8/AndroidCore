@@ -29,9 +29,13 @@ class NewWordFragment : Fragment() {
             val newWord = binding?.editWord?.text?.toString()
             findNavController().navigate(
                 R.id.action_newWordFragment_to_wordFragment,
-                bundleOf("NEW_WORD" to newWord)
+                bundleOf(NEW_WORD to newWord)
             )
         }
+    }
+
+    companion object {
+        const val NEW_WORD = "NEW_WORD"
     }
 
 }
