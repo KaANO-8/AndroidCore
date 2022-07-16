@@ -1,21 +1,18 @@
 package com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.data.Actor
+import com.kaano8.androidcore.databinding.ItemActorBinding
 
 class ActorAdapter(private val actors: MutableList<Actor>) :
     RecyclerView.Adapter<ActorAdapter.ActorViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorViewHolder {
-        return ActorViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_actor, parent, false)
-        )
+        val binding = ItemActorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ActorViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ActorViewHolder, position: Int) {
@@ -36,11 +33,10 @@ class ActorAdapter(private val actors: MutableList<Actor>) :
         //notifyDataSetChanged()
     }
 
-    class ActorViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val textView = view.findViewById<TextView>(R.id.actor_name)
-
+    class ActorViewHolder(private val itemActorBinding: ItemActorBinding) :
+        RecyclerView.ViewHolder(itemActorBinding.root) {
         fun bind(actor: Actor) {
-            textView.text = actor.name
+            itemActorBinding.actorName.text = actor.name
         }
     }
 }

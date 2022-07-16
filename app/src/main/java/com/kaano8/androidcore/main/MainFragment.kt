@@ -64,6 +64,12 @@ class MainFragment : Fragment() {
                     detail = "Work manager in action",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_blurFragment) })
             )
+            add(
+                MainListData.DataItem(
+                    title = "Services",
+                    detail = "Experiment with foreground service",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_memoFragment) })
+            )
             add(MainListData.HeaderItem(header = "UI"))
             add(
                 MainListData.DataItem(

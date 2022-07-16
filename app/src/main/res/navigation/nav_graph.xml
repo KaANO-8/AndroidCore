@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_mainFragment_to_wordFragment"
             app:destination="@id/wordFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_memoFragment"
+            app:destination="@id/memoFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
@@ -66,4 +69,9 @@
             android:id="@+id/action_wordFragment_to_newWordFragment"
             app:destination="@id/newWordFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/memoFragment"
+        android:name="com.kaano8.androidcore.service.MemoFragment"
+        android:label="fragment_memo"
+        tools:layout="@layout/fragment_memo" />
 </navigation>

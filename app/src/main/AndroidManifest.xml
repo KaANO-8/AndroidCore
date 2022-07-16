@@ -3,8 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kaano8.androidcore">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
-        android:name="AndroidCoreApplication"
+        android:name=".AndroidCoreApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,9 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore"
         tools:targetApi="31">
+        <service
+            android:name=".service.timerservice.TimerService"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".com.kaano8.androidcore.service.receiver.TimerReceiver"
+            android:enabled="true"
+            android:exported="true" />
         <activity
             android:name=".com.kaano8.androidcore.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

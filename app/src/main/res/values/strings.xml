@@ -32,4 +32,8 @@
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
+    <string name="time_is_running">Time\'s running! %1$s</string>
+    <string name="get_back">Hey you! Get back! :]</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 </resources>
