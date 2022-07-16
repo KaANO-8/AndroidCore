@@ -19,7 +19,6 @@ import com.kaano8.androidcore.databinding.FragmentMemoBinding
 import com.kaano8.androidcore.service.timerservice.TimerService
 import com.kaano8.androidcore.service.timerservice.TimerService.Companion.SERVICE_COMMAND
 
-private const val TAG = "MemoFragment"
 class MemoFragment : Fragment() {
 
     companion object {
@@ -34,6 +33,7 @@ class MemoFragment : Fragment() {
     // Foreground receiver
     private val timerReceiver: TimerReceiver by lazy { TimerReceiver() }
 
+    // Bound service
     private var progressService: ProgressService? = null
 
     override fun onCreateView(
@@ -64,7 +64,8 @@ class MemoFragment : Fragment() {
             activity?.unregisterReceiver(timerReceiver)
             viewModel.isReceiverRegistered = false
         }
-        context?.unbindService(viewModel.serviceConnection)
+        if (viewModel.binder.value != null)
+            context?.unbindService(viewModel.serviceConnection)
     }
 
     private fun observeForChanges() {
@@ -90,9 +91,9 @@ class MemoFragment : Fragment() {
                                 progress = progressService?.progress!!
                                 max = progressService?.maxProgress!!
                             }
-                            val progerss =
+                            val progress =
                                 "${100 * progressService?.progress!! / progressService?.maxProgress!!} %"
-                            binding.progressTextView.text = progerss
+                            binding.progressTextView.text = progress
                         }
                         handler.postDelayed(this, 100)
                     } else {
@@ -128,10 +129,19 @@ class MemoFragment : Fragment() {
         }
     }
 
+    private fun sendCommandToForegroundService(command: TimerState) {
+        context?.startForegroundService(getServiceIntent(command))
+    }
+
+    private fun getServiceIntent(command: TimerState) =
+        Intent(activity, TimerService::class.java).apply {
+            putExtra(SERVICE_COMMAND, command)
+        }
+
     private fun toggleUpdates() {
         if (progressService != null) {
             if (progressService?.progress == progressService?.maxProgress) {
-                progressService?.resetTask();
+                progressService?.resetTask()
                 binding.progressButton.text = "Start"
             } else {
                 if (progressService?.isPaused == true) {
@@ -145,23 +155,15 @@ class MemoFragment : Fragment() {
         }
     }
 
-    private fun sendCommandToForegroundService(command: TimerState) {
-        context?.startForegroundService(getServiceIntent(command))
-    }
-
-    private fun getServiceIntent(command: TimerState) =
-        Intent(activity, TimerService::class.java).apply {
-            putExtra(SERVICE_COMMAND, command)
-        }
-
     private fun startProgressService() {
+        val serviceIntent = Intent(activity, ProgressService::class.java)
         context?.apply {
             // Starting service before binding makes sure the service
             // keeps on executing even after activity unbinds it
-            startService(Intent(activity, ProgressService::class.java))
+            startService(serviceIntent)
             // Actually binding the service
             bindService(
-                Intent(activity, ProgressService::class.java),
+                serviceIntent,
                 viewModel.serviceConnection,
                 Context.BIND_AUTO_CREATE
             )
