@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.kaano8.androidcore.databinding.ActivityMainBinding
 import com.kaano8.androidcore.service.MemoFragment
-import com.kaano8.androidcore.service.MemoViewModel
+import com.kaano8.androidcore.service.ServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val memoViewModel: MemoViewModel by viewModels()
+    private val serviceViewModel: ServiceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +62,6 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         val elapsedTime = intent?.getIntExtra(MemoFragment.NOTIFICATION_TEXT, 0) ?: 0
-        memoViewModel.updateElapsedTime(elapsedTime)
+        serviceViewModel.updateElapsedTime(elapsedTime)
     }
 }

@@ -22,9 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TimerService : Service() {
 
-    @Inject
-    lateinit var coroutineScope: CoroutineScope
-
     private var timerState = TimerState.INITIALIZED
     private var currentTime: Int = 0
     private var startedAtTimestamp: Int = 0
@@ -73,7 +70,6 @@ class TimerService : Service() {
     private fun stopTimer() {
         timerState = TimerState.STOP
         handler.removeCallbacks(runnable)
-        coroutineScope.cancel()
         broadcastUpdate()
         stopService()
     }
@@ -111,12 +107,11 @@ class TimerService : Service() {
     }
 
     private fun startCoroutineTimer() {
-        coroutineScope.launch { handler.post(runnable) }
+        handler.post(runnable)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        coroutineScope.cancel()
         handler.removeCallbacks(runnable)
     }
 
