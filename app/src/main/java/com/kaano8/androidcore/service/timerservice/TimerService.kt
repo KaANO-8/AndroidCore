@@ -33,8 +33,8 @@ class TimerService : Service() {
     private val notificationHelper: NotificationHelper by lazy { NotificationHelper(this) }
     private val runnable: Runnable = object : Runnable {
         override fun run() {
-            currentTime++
             broadcastUpdate()
+            currentTime++
             // Repeat every 1 second
             handler.postDelayed(this, 1000)
         }
