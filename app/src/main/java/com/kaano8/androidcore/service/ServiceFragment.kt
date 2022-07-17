@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerState
 import com.kaano8.androidcore.com.kaano8.androidcore.service.progressservice.ProgressService
@@ -52,7 +53,7 @@ class MemoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (!viewModel.isReceiverRegistered) {
-            activity?.registerReceiver(timerReceiver, IntentFilter(TIMER_ACTION))
+            LocalBroadcastManager.getInstance(context!!).registerReceiver(timerReceiver, IntentFilter(TIMER_ACTION))
             viewModel.isReceiverRegistered = true
         }
         startProgressService()
@@ -61,7 +62,7 @@ class MemoFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         if (viewModel.isReceiverRegistered) {
-            activity?.unregisterReceiver(timerReceiver)
+            LocalBroadcastManager.getInstance(context!!).unregisterReceiver(timerReceiver)
             viewModel.isReceiverRegistered = false
         }
         if (viewModel.binder.value != null)

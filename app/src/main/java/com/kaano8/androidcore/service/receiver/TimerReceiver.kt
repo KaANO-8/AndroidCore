@@ -15,7 +15,7 @@ class TimerReceiver : BroadcastReceiver() {
                     NOTIFICATION_TEXT, getElapsedTime(intent)
                 )
             }
-
+            activityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context?.startActivity(activityIntent)
         }
     }

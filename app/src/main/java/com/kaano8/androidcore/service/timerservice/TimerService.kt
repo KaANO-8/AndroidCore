@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.notification.NotificationHelper
@@ -93,7 +94,12 @@ class TimerService : Service() {
             // count elapsed time
             val elapsedTime = (currentTime - startedAtTimestamp)
 
-            sendBroadcast(Intent(TIMER_ACTION).also { it.putExtra(NOTIFICATION_TEXT, elapsedTime) })
+            LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(TIMER_ACTION).also {
+                it.putExtra(
+                    NOTIFICATION_TEXT,
+                    elapsedTime
+                )
+            })
 
             notificationHelper.updateNotification(
                 getString(
