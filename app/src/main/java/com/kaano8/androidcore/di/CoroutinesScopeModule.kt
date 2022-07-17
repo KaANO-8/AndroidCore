@@ -12,7 +12,7 @@ import kotlinx.coroutines.SupervisorJob
 import javax.inject.Named
 import javax.inject.Singleton
 
-@InstallIn(ServiceComponent::class, ViewModelComponent::class)
+@InstallIn(ServiceComponent::class, ViewModelComponent::class, SingletonComponent::class)
 @Module
 object CoroutinesScopesModule {
 

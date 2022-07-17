@@ -1,15 +1,25 @@
 package com.kaano8.androidcore
 
 import android.app.Application
-import com.kaano8.androidcore.com.kaano8.androidcore.room.database.WordRoomDatabase
-import com.kaano8.androidcore.com.kaano8.androidcore.room.repository.WordRepository
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
 @HiltAndroidApp
-class AndroidCoreApplication : Application() {
+class AndroidCoreApplication : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setMinimumLoggingLevel(android.util.Log.INFO)
+            .setWorkerFactory(workerFactory)
+            .build()
 
     companion object {
         private lateinit var executorService: ExecutorService

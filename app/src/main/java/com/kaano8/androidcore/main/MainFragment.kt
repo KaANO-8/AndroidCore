@@ -77,6 +77,15 @@ class MainFragment : Fragment() {
                     detail = "Experiment with RV's diffUtil",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_diffUtilFragment) })
             )
+            add(
+                MainListData.DataItem(
+                    title = "Settings Pref",
+                    detail = "Play with settings prefs",
+                    action = {
+                        val action = MainFragmentDirections.actionMainFragmentToSettingsFragment("hello, world")
+                        findNavController().navigate(action)
+                    })
+            )
             add(MainListData.HeaderItem(header = "Database"))
             add(
                 MainListData.DataItem(

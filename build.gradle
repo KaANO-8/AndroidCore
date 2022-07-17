@@ -3,7 +3,7 @@ buildscript {
     dependencies {
         def hiltVersion = "2.38.1"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
-        def nav_version = "2.4.2"
+        def nav_version = "2.5.0"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }

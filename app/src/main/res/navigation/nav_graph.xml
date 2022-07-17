@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_mainFragment_to_memoFragment"
             app:destination="@id/memoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
@@ -74,4 +77,12 @@
         android:name="com.kaano8.androidcore.service.MemoFragment"
         android:label="Service"
         tools:layout="@layout/fragment_memo" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.kaano8.androidcore.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <argument
+            android:name="setting"
+            app:argType="string" />
+    </fragment>
 </navigation>
