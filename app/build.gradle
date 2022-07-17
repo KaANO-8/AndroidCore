@@ -47,6 +47,7 @@ android {
 
 dependencies {
 
+    implementation 'androidx.preference:preference:1.2.0'
     def nav_version = "2.4.2"
     def work_version = "2.7.1"
     def glide_version = "4.12.0"

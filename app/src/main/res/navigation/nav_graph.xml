@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/handlerFragment"
         android:name="com.kaano8.androidcore.handler.HandlerFragment"
-        android:label="fragment_handler"
+        android:label="Handlers"
         tools:layout="@layout/fragment_handler" />
     <fragment
         android:id="@+id/backgroundThread"
         android:name="com.kaano8.androidcore.backgroundthread.BackgroundThread"
-        android:label="fragment_background_thread"
+        android:label="Background Thread"
         tools:layout="@layout/fragment_background_thread" />
     <fragment
         android:id="@+id/blurFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.kaano8.androidcore.com.kaano8.androidcore.main.MainFragment"
-        android:label="fragment_main"
+        android:label="Home"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_blurFragment"
@@ -46,11 +46,11 @@
     <fragment
         android:id="@+id/diffUtilFragment"
         android:name="com.kaano8.androidcore.com.kaano8.androidcore.recyclerview.DiffUtilFragment"
-        android:label="DiffUtilFragment" />
+        android:label="Diff util" />
     <fragment
         android:id="@+id/newWordFragment"
         android:name="com.kaano8.androidcore.room.ui.newword.NewWordFragment"
-        android:label="fragment_new_word"
+        android:label="New Word"
         tools:layout="@layout/fragment_new_word" >
         <argument
             android:name="newWord"
@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/wordFragment"
         android:name="com.kaano8.androidcore.room.ui.WordFragment"
-        android:label="fragment_word"
+        android:label="Word"
         tools:layout="@layout/fragment_word" >
         <action
             android:id="@+id/action_wordFragment_to_newWordFragment"
@@ -72,6 +72,6 @@
     <fragment
         android:id="@+id/memoFragment"
         android:name="com.kaano8.androidcore.service.MemoFragment"
-        android:label="fragment_memo"
+        android:label="Service"
         tools:layout="@layout/fragment_memo" />
 </navigation>
