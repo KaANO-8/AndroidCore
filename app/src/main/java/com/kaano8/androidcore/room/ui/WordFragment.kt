@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.room.entity.Word
 import com.kaano8.androidcore.com.kaano8.androidcore.room.ui.adapter.WordListAdapter
 import com.kaano8.androidcore.databinding.FragmentWordBinding
-import com.kaano8.androidcore.room.ui.newword.NewWordFragment.Companion.NEW_WORD
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,6 +20,7 @@ class WordFragment() : Fragment() {
 
     private val wordViewModel: WordViewModel by viewModels()
     private var binding: FragmentWordBinding? = null
+    private val args: WordFragmentArgs by navArgs()
 
     @Inject
     lateinit var wordAdapter: WordListAdapter
@@ -38,9 +38,8 @@ class WordFragment() : Fragment() {
         setupRecyclerView()
         setupObservers()
         setupClickListeners()
-
-        val newWord = arguments?.getString(NEW_WORD)
-        if (newWord?.isNotEmpty() == true)
+        val newWord = args.newWord
+        if (newWord?.isNotBlank() == true)
             wordViewModel.insert(Word(word = newWord))
 
     }

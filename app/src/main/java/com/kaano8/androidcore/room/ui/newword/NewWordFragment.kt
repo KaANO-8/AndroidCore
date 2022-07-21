@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.kaano8.androidcore.R
 import com.kaano8.androidcore.databinding.FragmentNewWordBinding
 
 
@@ -27,10 +25,7 @@ class NewWordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.buttonSave?.setOnClickListener {
             val newWord = binding?.editWord?.text?.toString()
-            findNavController().navigate(
-                R.id.action_newWordFragment_to_wordFragment,
-                bundleOf(NEW_WORD to newWord)
-            )
+            findNavController().navigate(NewWordFragmentDirections.actionNewWordFragmentToWordFragment(newWord))
         }
     }
 

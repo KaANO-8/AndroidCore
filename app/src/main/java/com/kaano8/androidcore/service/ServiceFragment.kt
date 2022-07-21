@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerState
@@ -19,6 +20,7 @@ import com.kaano8.androidcore.com.kaano8.androidcore.service.receiver.TimerRecei
 import com.kaano8.androidcore.databinding.FragmentMemoBinding
 import com.kaano8.androidcore.service.timerservice.TimerService
 import com.kaano8.androidcore.service.timerservice.TimerService.Companion.SERVICE_COMMAND
+import kotlinx.coroutines.flow.collectLatest
 
 class MemoFragment : Fragment() {
 
@@ -79,7 +81,7 @@ class MemoFragment : Fragment() {
         }
 
         viewModel.isProgressBarUpdating.observe(viewLifecycleOwner) { isUpdating ->
-            val handler = Handler(Looper.getMainLooper())
+            /*val handler = Handler(Looper.getMainLooper())
             val runnable = object : Runnable {
                 override fun run() {
                     if (isUpdating) {
@@ -101,11 +103,11 @@ class MemoFragment : Fragment() {
                         handler.removeCallbacks(this)
                     }
                 }
-            }
+            }*/
 
             if (isUpdating) {
                 binding.progressButton.text = "Pause"
-                handler.postDelayed(runnable, 100)
+
             } else {
                 if (progressService?.progress == progressService?.maxProgress) {
                     binding.progressButton.text = "Restart"
@@ -146,7 +148,19 @@ class MemoFragment : Fragment() {
                 binding.progressButton.text = "Start"
             } else {
                 if (progressService?.isPaused == true) {
-                    progressService?.resumePretendLongRunningTask()
+                    lifecycleScope.launchWhenStarted {
+                        progressService?.resumePretendLongRunningTask()?.collectLatest { currentProgress ->
+                            if (currentProgress == progressService?.maxProgress)
+                                viewModel.setIsProgressBarUpdating(false)
+                            binding.progressBar.apply {
+                                progress = currentProgress
+                                max = progressService?.maxProgress!!
+                            }
+                            val progress =
+                                "${100 * currentProgress / progressService?.maxProgress!!} %"
+                            binding.progressTextView.text = progress
+                        }
+                    }
                     viewModel.setIsProgressBarUpdating(true)
                 } else {
                     progressService?.pausePretendLongRunningTask()

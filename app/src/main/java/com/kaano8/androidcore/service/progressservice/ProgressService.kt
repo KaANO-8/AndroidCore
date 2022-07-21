@@ -7,13 +7,18 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 
 private const val TAG = "ProgressService"
 
 class ProgressService : Service() {
 
     private val binder: ProgressBinder by lazy { ProgressBinder() }
-    private val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
+    private val _progressServiceState = MutableStateFlow(ProgressServiceState.START)
+    val progressServiceState: StateFlow<ProgressServiceState>
+        get() = _progressServiceState
     var progress = 0
         private set
     val maxProgress = 5000
@@ -33,28 +38,25 @@ class ProgressService : Service() {
         isPaused = true
     }
 
-    fun resumePretendLongRunningTask() {
+    suspend fun resumePretendLongRunningTask(): Flow<Int> {
         isPaused = false
-        startPretendLongRunningTask()
+        return startPretendLongRunningTask()
     }
 
-    fun startPretendLongRunningTask() {
-        val runnable = object : Runnable {
-            override fun run() {
-                if (progress >= maxProgress || isPaused) {
-                    Log.d(TAG, "run: removing callbacks")
-                    handler.removeCallbacks(this)
-                    pausePretendLongRunningTask()
-                } else {
-                    Log.d(TAG, "run: progress: $progress")
-                    progress += 100
-                    handler.postDelayed(this, 100)
-                }
+    private suspend fun startPretendLongRunningTask() = flow {
+        while (true) {
+            if (progress >= maxProgress || isPaused) {
+                Log.d(TAG, "Cancelling flow")
+                pausePretendLongRunningTask()
+                break
+            } else {
+                progress += 100
+                Log.d(TAG, "Emitting $progress")
+                emit(progress)
+                delay(100)
             }
         }
-        // start progressing
-        handler.postDelayed(runnable, 100)
-    }
+    }.flowOn(Dispatchers.Default)
 
     fun resetTask() {
         progress = 0
@@ -72,5 +74,12 @@ class ProgressService : Service() {
     override fun onUnbind(intent: Intent?): Boolean {
         Log.d(TAG, "onUnbind: called")
         return super.onUnbind(intent)
+    }
+
+    enum class ProgressServiceState {
+        START,
+        PAUSE,
+        RESUME,
+        RESTART
     }
 }

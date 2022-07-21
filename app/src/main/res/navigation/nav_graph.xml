@@ -55,13 +55,11 @@
         android:name="com.kaano8.androidcore.room.ui.newword.NewWordFragment"
         android:label="New Word"
         tools:layout="@layout/fragment_new_word" >
-        <argument
-            android:name="newWord"
-            app:argType="string" />
         <action
             android:id="@+id/action_newWordFragment_to_wordFragment"
             app:destination="@id/wordFragment"
-            app:popUpTo="@id/wordFragment" />
+            app:popUpTo="@id/wordFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/wordFragment"
@@ -71,6 +69,11 @@
         <action
             android:id="@+id/action_wordFragment_to_newWordFragment"
             app:destination="@id/newWordFragment" />
+        <argument
+            android:name="newWord"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue='' />
     </fragment>
     <fragment
         android:id="@+id/memoFragment"
