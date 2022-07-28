@@ -51,6 +51,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy: called")
+    }
+
     /**
      * Poor setup, will be constantly calling onPause - onResume every secs when broadcast is received
      */
