@@ -70,6 +70,12 @@ class MainFragment : Fragment() {
                     detail = "Experiment with foreground service",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_memoFragment) })
             )
+            add(
+                MainListData.DataItem(
+                    title = "Coroutines Demo",
+                    detail = "Experiment with coroutines",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_coroutineDemoFragment) })
+            )
             add(MainListData.HeaderItem(header = "UI"))
             add(
                 MainListData.DataItem(
