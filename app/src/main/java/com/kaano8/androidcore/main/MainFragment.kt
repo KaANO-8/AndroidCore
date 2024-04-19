@@ -95,13 +95,6 @@ class MainFragment : Fragment() {
                         findNavController().navigate(action)
                     })
             )
-            add(MainListData.HeaderItem(header = "Database"))
-            add(
-                MainListData.DataItem(
-                    title = "Room",
-                    detail = "Experiment with Room database",
-                    action = { findNavController().navigate(R.id.action_mainFragment_to_wordFragment) })
-            )
             add(
                 MainListData.DataItem(
                     title = "Compose",
@@ -109,6 +102,13 @@ class MainFragment : Fragment() {
                     action = {
                         startActivity(Intent(activity, ComposeActivity::class.java))
                     })
+            )
+            add(MainListData.HeaderItem(header = "Database"))
+            add(
+                MainListData.DataItem(
+                    title = "Room",
+                    detail = "Experiment with Room database",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_wordFragment) })
             )
         }
         return list
