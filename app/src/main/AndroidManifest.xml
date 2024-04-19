@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".AndroidCoreApplication"
@@ -16,11 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidCore"
         tools:targetApi="31">
+        <activity
+            android:name=".compose.ComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/Theme.AndroidCore" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove"/>
+            tools:node="remove" />
 
         <service android:name=".service.timerservice.TimerService" />
         <service android:name=".com.kaano8.androidcore.service.progressservice.ProgressService" />

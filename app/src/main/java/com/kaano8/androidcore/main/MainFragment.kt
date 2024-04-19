@@ -1,5 +1,6 @@
 package com.kaano8.androidcore.com.kaano8.androidcore.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.adapter.MainAdapter
 import com.kaano8.androidcore.com.kaano8.androidcore.adapter.data.MainListData
+import com.kaano8.androidcore.compose.ComposeActivity
 import com.kaano8.androidcore.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -88,7 +90,8 @@ class MainFragment : Fragment() {
                     title = "Settings Pref",
                     detail = "Play with settings prefs",
                     action = {
-                        val action = MainFragmentDirections.actionMainFragmentToSettingsFragment("hello, world")
+                        val action =
+                            MainFragmentDirections.actionMainFragmentToSettingsFragment("hello, world")
                         findNavController().navigate(action)
                     })
             )
@@ -98,6 +101,14 @@ class MainFragment : Fragment() {
                     title = "Room",
                     detail = "Experiment with Room database",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_wordFragment) })
+            )
+            add(
+                MainListData.DataItem(
+                    title = "Compose",
+                    detail = "Experiment with compose",
+                    action = {
+                        startActivity(Intent(activity, ComposeActivity::class.java))
+                    })
             )
         }
         return list

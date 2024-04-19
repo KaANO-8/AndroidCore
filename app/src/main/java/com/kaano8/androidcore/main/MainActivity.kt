@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Poor setup, will be constantly calling onPause - onResume every secs when broadcast is received
      */
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         val elapsedTime = intent?.getIntExtra(MemoFragment.NOTIFICATION_TEXT, 0) ?: 0
         serviceViewModel.updateElapsedTime(elapsedTime)
