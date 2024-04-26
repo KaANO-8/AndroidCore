@@ -9,22 +9,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerState
+import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerUiState.Pause
+import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerUiState.Start
+import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerUiState.Stop
 import com.kaano8.androidcore.com.kaano8.androidcore.service.progressservice.ProgressService
 import com.kaano8.androidcore.com.kaano8.androidcore.service.receiver.TimerReceiver
+import com.kaano8.androidcore.com.kaano8.androidcore.service.timerservice.TimerServiceWithCoroutine
 import com.kaano8.androidcore.databinding.FragmentMemoBinding
-import com.kaano8.androidcore.service.timerservice.TimerService
 import com.kaano8.androidcore.service.timerservice.TimerService.Companion.SERVICE_COMMAND
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class MemoFragment : Fragment() {
+class ServiceFragment : Fragment() {
 
     companion object {
         const val TIMER_ACTION = "TimerAction"
         const val NOTIFICATION_TEXT = "NotificationText"
+        const val UPDATED_TIMER_VALUE = "UpdatedTimerValue"
     }
 
     private val viewModel: ServiceViewModel by activityViewModels()
@@ -53,9 +61,8 @@ class MemoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (!viewModel.isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(context!!).registerReceiver(timerReceiver, IntentFilter(
-                TIMER_ACTION
-            ))
+            LocalBroadcastManager.getInstance(requireContext())
+                .registerReceiver(timerReceiver, IntentFilter(TIMER_ACTION))
             viewModel.isReceiverRegistered = true
         }
         startProgressService()
@@ -64,7 +71,7 @@ class MemoFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         if (viewModel.isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(context!!).unregisterReceiver(timerReceiver)
+            LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(timerReceiver)
             viewModel.isReceiverRegistered = false
         }
         if (viewModel.binder.value != null)
@@ -74,6 +81,20 @@ class MemoFragment : Fragment() {
     private fun observeForChanges() {
         viewModel.elapsedTime.observe(viewLifecycleOwner) { elapsedTime ->
             binding.timerTextView.text = elapsedTime.secondsToTime()
+        }
+
+        // observe timer ui state
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.timerUiState.collect {
+                    when (it) {
+                        Start -> binding.startSevice.text = getString(R.string.pause)
+                        Stop -> binding.startSevice.text = getString(R.string.start)
+                        Pause -> binding.startSevice.text = getString(R.string.resume)
+                    }
+                    binding.stopService.isEnabled = it != Stop
+                }
+            }
         }
 
         viewModel.binder.observe(viewLifecycleOwner) { binder ->
@@ -121,9 +142,25 @@ class MemoFragment : Fragment() {
     private fun setupClickListeners() {
         binding.apply {
             startSevice.setOnClickListener {
-                sendCommandToForegroundService(TimerState.START)
+                when (viewModel.timerUiState.value) {
+                    Start -> {
+                        viewModel.pausedService()
+                        sendCommandToForegroundService(TimerState.PAUSE)
+
+                    }
+                    Stop -> {
+                        viewModel.startedService()
+                        sendCommandToForegroundService(TimerState.START)
+                    }
+                    Pause -> {
+                        viewModel.startedService()
+                        sendCommandToForegroundService(TimerState.START)
+                    }
+                }
+
             }
             stopService.setOnClickListener {
+                viewModel.stoppedService()
                 sendCommandToForegroundService(TimerState.STOP)
             }
             progressButton.setOnClickListener {
@@ -137,7 +174,7 @@ class MemoFragment : Fragment() {
     }
 
     private fun getServiceIntent(command: TimerState) =
-        Intent(activity, TimerService::class.java).apply {
+        Intent(activity, TimerServiceWithCoroutine::class.java).apply {
             putExtra(SERVICE_COMMAND, command)
         }
 
@@ -149,17 +186,18 @@ class MemoFragment : Fragment() {
             } else {
                 if (progressService?.isPaused == true) {
                     lifecycleScope.launchWhenStarted {
-                        progressService?.resumePretendLongRunningTask()?.collectLatest { currentProgress ->
-                            if (currentProgress == progressService?.maxProgress)
-                                viewModel.setIsProgressBarUpdating(false)
-                            binding.progressBar.apply {
-                                progress = currentProgress
-                                max = progressService?.maxProgress!!
+                        progressService?.resumePretendLongRunningTask()
+                            ?.collectLatest { currentProgress ->
+                                if (currentProgress == progressService?.maxProgress)
+                                    viewModel.setIsProgressBarUpdating(false)
+                                binding.progressBar.apply {
+                                    progress = currentProgress
+                                    max = progressService?.maxProgress!!
+                                }
+                                val progress =
+                                    "${100 * currentProgress / progressService?.maxProgress!!} %"
+                                binding.progressTextView.text = progress
                             }
-                            val progress =
-                                "${100 * currentProgress / progressService?.maxProgress!!} %"
-                            binding.progressTextView.text = progress
-                        }
                     }
                     viewModel.setIsProgressBarUpdating(true)
                 } else {

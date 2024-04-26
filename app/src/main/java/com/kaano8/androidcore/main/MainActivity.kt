@@ -14,7 +14,7 @@ import com.kaano8.androidcore.R
 import com.kaano8.androidcore.com.kaano8.androidcore.workmanager.workers.SuggestionWorker
 import com.kaano8.androidcore.com.kaano8.androidcore.workmanager.workers.SuggestionWorker.Companion.NEW_WORD
 import com.kaano8.androidcore.databinding.ActivityMainBinding
-import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.ServiceFragment.Companion.UPDATED_TIMER_VALUE
 import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.ServiceViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        val elapsedTime = intent?.getIntExtra(MemoFragment.NOTIFICATION_TEXT, 0) ?: 0
+        val elapsedTime = intent.getIntExtra(UPDATED_TIMER_VALUE, 0) ?: 0
         serviceViewModel.updateElapsedTime(elapsedTime)
     }
 }

@@ -2,7 +2,6 @@ package com.kaano8.androidcore.service.timerservice
 
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
@@ -12,8 +11,8 @@ import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.notification.NotificationHelper
 import com.kaano8.androidcore.com.kaano8.androidcore.notification.NotificationHelper.Companion.TIMER_NOTIFICATION_ID
 import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerState
-import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.NOTIFICATION_TEXT
-import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.TIMER_ACTION
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.ServiceFragment.Companion.NOTIFICATION_TEXT
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.ServiceFragment.Companion.TIMER_ACTION
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -72,11 +71,7 @@ class TimerService : Service() {
     }
 
     private fun stopService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            stopForeground(true)
-        } else {
-            stopSelf()
-        }
+        stopForeground(true)
     }
 
     private fun pauseTimer() {
