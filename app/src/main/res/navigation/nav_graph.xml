@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/memoFragment"
-        android:name="com.kaano8.androidcore.service.MemoFragment"
+        android:name="com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment"
         android:label="Service"
         tools:layout="@layout/fragment_memo" />
     <fragment

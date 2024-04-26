@@ -29,7 +29,8 @@
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
 
-        <service android:name=".service.timerservice.TimerService" />
+        <service android:name=".service.timerservice.TimerService"
+            android:foregroundServiceType="shortService"/>
         <service android:name=".com.kaano8.androidcore.service.progressservice.ProgressService" />
 
         <activity

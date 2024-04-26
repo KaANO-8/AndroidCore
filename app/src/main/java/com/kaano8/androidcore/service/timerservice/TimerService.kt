@@ -12,13 +12,9 @@ import com.kaano8.androidcore.com.kaano8.androidcore.extensions.secondsToTime
 import com.kaano8.androidcore.com.kaano8.androidcore.notification.NotificationHelper
 import com.kaano8.androidcore.com.kaano8.androidcore.notification.NotificationHelper.Companion.TIMER_NOTIFICATION_ID
 import com.kaano8.androidcore.com.kaano8.androidcore.service.model.TimerState
-import com.kaano8.androidcore.service.MemoFragment.Companion.NOTIFICATION_TEXT
-import com.kaano8.androidcore.service.MemoFragment.Companion.TIMER_ACTION
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.NOTIFICATION_TEXT
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.TIMER_ACTION
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class TimerService : Service() {

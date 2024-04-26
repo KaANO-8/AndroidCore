@@ -1,4 +1,4 @@
-package com.kaano8.androidcore.service
+package com.kaano8.androidcore.com.kaano8.androidcore.service.ui
 
 import android.content.ComponentName
 import android.content.ServiceConnection

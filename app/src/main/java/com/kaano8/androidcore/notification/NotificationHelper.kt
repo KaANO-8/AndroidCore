@@ -22,11 +22,10 @@ class NotificationHelper(private val context: Context) {
             context,
             0,
             Intent(context, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() =
         NotificationChannel(
             CHANNEL_ID,
@@ -48,9 +47,7 @@ class NotificationHelper(private val context: Context) {
     }
 
     fun getNotification(): Notification {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(createChannel())
-        }
+        notificationManager.createNotificationChannel(createChannel())
 
         return notificationBuilder.build()
     }

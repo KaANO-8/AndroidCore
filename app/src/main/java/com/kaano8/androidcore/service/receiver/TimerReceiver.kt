@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.kaano8.androidcore.com.kaano8.androidcore.main.MainActivity
-import com.kaano8.androidcore.service.MemoFragment.Companion.NOTIFICATION_TEXT
-import com.kaano8.androidcore.service.MemoFragment.Companion.TIMER_ACTION
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.NOTIFICATION_TEXT
+import com.kaano8.androidcore.com.kaano8.androidcore.service.ui.MemoFragment.Companion.TIMER_ACTION
 
 class TimerReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

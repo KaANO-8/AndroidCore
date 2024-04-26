@@ -1,11 +1,9 @@
-package com.kaano8.androidcore.service
+package com.kaano8.androidcore.com.kaano8.androidcore.service.ui
 
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +53,9 @@ class MemoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (!viewModel.isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(context!!).registerReceiver(timerReceiver, IntentFilter(TIMER_ACTION))
+            LocalBroadcastManager.getInstance(context!!).registerReceiver(timerReceiver, IntentFilter(
+                TIMER_ACTION
+            ))
             viewModel.isReceiverRegistered = true
         }
         startProgressService()
