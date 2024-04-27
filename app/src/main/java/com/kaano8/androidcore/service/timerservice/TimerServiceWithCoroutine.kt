@@ -20,6 +20,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 
@@ -39,6 +40,7 @@ class TimerServiceWithCoroutine: Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate() called")
+        serviceCoroutineScope.coroutineContext.job.children.forEach { it.cancel() }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

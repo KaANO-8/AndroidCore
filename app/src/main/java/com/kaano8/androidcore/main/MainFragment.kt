@@ -110,6 +110,15 @@ class MainFragment : Fragment() {
                     detail = "Experiment with Room database",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_wordFragment) })
             )
+
+            add(MainListData.HeaderItem(header = "System Design"))
+
+            add(
+                MainListData.DataItem(
+                    title = "File downloader",
+                    detail = "Implement file downloader",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_fileDownloaderFragment) })
+            )
         }
         return list
     }

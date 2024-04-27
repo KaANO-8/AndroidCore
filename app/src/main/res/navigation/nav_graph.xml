@@ -48,6 +48,9 @@
         <action
             android:id="@+id/action_mainFragment_to_coroutineDemoFragment"
             app:destination="@id/coroutineDemoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_fileDownloaderFragment"
+            app:destination="@id/fileDownloaderFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
@@ -96,4 +99,9 @@
         android:name="com.kaano8.androidcore.com.kaano8.androidcore.coroutine.ui.CoroutineDemoFragment"
         android:label="fragment_coroutine_demo"
         tools:layout="@layout/fragment_coroutine_demo" />
+    <fragment
+        android:id="@+id/fileDownloaderFragment"
+        android:name="com.kaano8.androidcore.filedownloader.FileDownloaderFragment"
+        android:label="fragment_file_downloader"
+        tools:layout="@layout/fragment_file_downloader" />
 </navigation>
