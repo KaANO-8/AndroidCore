@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kaano8.androidcore.com.kaano8.androidcore.filedownloader.repository.dao.FileDownloadDao
@@ -15,7 +16,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
-@Database(entities = [Word::class, DownloadTask::class], version = 2, exportSchema = false)
+@Database(entities = [Word::class, DownloadTask::class], version = 3, exportSchema = false)
+@TypeConverters(FileDownloadTypeConvertor::class)
 abstract class CoreDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WordDao
@@ -62,7 +64,9 @@ abstract class CoreDatabase : RoomDatabase() {
                     context.applicationContext,
                     CoreDatabase::class.java,
                     "word_database"
-                ).addCallback(WordDatabaseCallback(coroutineScope)).build()
+                ).fallbackToDestructiveMigration()
+                    .addCallback(WordDatabaseCallback(coroutineScope))
+                    .build()
                 INSTANCE = instance
                 // return instance
                 instance

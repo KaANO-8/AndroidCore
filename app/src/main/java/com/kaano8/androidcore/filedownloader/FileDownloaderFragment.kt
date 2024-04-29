@@ -1,18 +1,22 @@
 package com.kaano8.androidcore.filedownloader
 
-import androidx.fragment.app.viewModels
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.kaano8.androidcore.com.kaano8.androidcore.filedownloader.FileDownloadViewModelFactory
 import com.kaano8.androidcore.com.kaano8.androidcore.filedownloader.adapter.FileDownloadAdapter
 import com.kaano8.androidcore.databinding.FragmentFileDownloaderBinding
+import com.kaano8.androidcore.filedownloader.service.FileDownloaderService
+import com.kaano8.androidcore.filedownloader.service.FileDownloaderService.Companion.ACTION
+import com.kaano8.androidcore.filedownloader.service.FileDownloaderService.Companion.REQUEST_NAME
+import com.kaano8.androidcore.filedownloader.service.FileDownloaderService.Companion.TASK_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,24 +47,49 @@ class FileDownloaderFragment : Fragment() {
         observeForChanges()
         with(binding) {
             scheduleTask.setOnClickListener {
-                viewModel.scheduleTask(
-                    requestName.text.toString(),
-                    requestTime.text.toString().toInt()
-                )
+                scheduleWork(requestName.text.toString())
+            }
+            cleanAll.setOnClickListener {
+                viewModel.clearAll()
             }
         }
     }
 
     private fun setupRecyclerView() {
-        fileDownloadAdapter = FileDownloadAdapter(onPause = {
-            Toast.makeText(context, "Following item is paused: {$it}", Toast.LENGTH_LONG)
-                .show()
-        }, onStop = { downloadId ->
-            viewModel.markItemCompleted(downloadId)
-        })
+        fileDownloadAdapter = FileDownloadAdapter(
+            onPause = { pauseWork(it) },
+            onStop = { downloadId -> cancelWork(downloadId) }
+        )
+
         with(binding.downloadList) {
             adapter = fileDownloadAdapter
         }
+    }
+    private fun scheduleWork(requestName: String) {
+        val intent = Intent(requireActivity(), FileDownloaderService::class.java).also {
+            it.putExtra(ACTION, FileDownloaderService.Companion.Action.START.name)
+            it.putExtra(REQUEST_NAME, requestName)
+        }
+
+        context?.startService(intent)
+    }
+
+    private fun pauseWork(taskId: Long) {
+        val intent = Intent(requireActivity(), FileDownloaderService::class.java).also {
+            it.putExtra(ACTION, FileDownloaderService.Companion.Action.PAUSE.name)
+            it.putExtra(TASK_ID, taskId)
+        }
+
+        context?.startService(intent)
+    }
+
+    private fun cancelWork(taskId: Long) {
+        val intent = Intent(requireActivity(), FileDownloaderService::class.java).also {
+            it.putExtra(ACTION, FileDownloaderService.Companion.Action.CANCEL.name)
+            it.putExtra(TASK_ID, taskId)
+        }
+
+        context?.startService(intent)
     }
 
     private fun observeForChanges() {

@@ -51,6 +51,12 @@
         <action
             android:id="@+id/action_mainFragment_to_fileDownloaderFragment"
             app:destination="@id/fileDownloaderFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_locationServiceFragment"
+            app:destination="@id/locationServiceFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_contactListFragment"
+            app:destination="@id/contactListFragment" />
     </fragment>
     <fragment
         android:id="@+id/diffUtilFragment"
@@ -104,4 +110,14 @@
         android:name="com.kaano8.androidcore.filedownloader.FileDownloaderFragment"
         android:label="fragment_file_downloader"
         tools:layout="@layout/fragment_file_downloader" />
+    <fragment
+        android:id="@+id/locationServiceFragment"
+        android:name="com.kaano8.androidcore.locationService.LocationServiceFragment"
+        android:label="fragment_location_service"
+        tools:layout="@layout/fragment_location_service" />
+    <fragment
+        android:id="@+id/contactListFragment"
+        android:name="com.kaano8.androidcore.contentprovider.ContactListFragment"
+        android:label="fragment_contact_list"
+        tools:layout="@layout/fragment_contact_list" />
 </navigation>

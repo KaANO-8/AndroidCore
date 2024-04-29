@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "file_download")
 data class DownloadTask(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     @ColumnInfo("name") val name: String,
-    @ColumnInfo("time") val time: Int,
-    @ColumnInfo("progress") val progress: Int
+    @ColumnInfo("progress") val progress: Int = 0,
+    @ColumnInfo("downloadStatus") val downloadStatus: DownloadStatus
 )
 
 enum class DownloadStatus {
-    INIT, COMPLETE, INPROGRESS, PAUSED, FAILED
+    QUEUED, COMPLETE, IN_PROGRESS, PAUSED, CANCELLED
 }

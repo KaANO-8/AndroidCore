@@ -5,12 +5,8 @@ import com.kaano8.androidcore.com.kaano8.androidcore.filedownloader.repository.m
 
 class FileDownloadTypeConvertor {
     @TypeConverter
-    fun fromDownloadStatus(value: String): DownloadStatus {
-        return DownloadStatus.valueOf(value)
-    }
+    fun toDownloadStatus(value: String): DownloadStatus = enumValueOf<DownloadStatus>(value)
 
     @TypeConverter
-    fun dateToTimestamp(status: DownloadStatus): String {
-        return status.name
-    }
+    fun fromDownloadStatus(status: DownloadStatus): String = status.name
 }

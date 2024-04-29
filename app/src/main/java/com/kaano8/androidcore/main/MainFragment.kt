@@ -119,6 +119,19 @@ class MainFragment : Fragment() {
                     detail = "Implement file downloader",
                     action = { findNavController().navigate(R.id.action_mainFragment_to_fileDownloaderFragment) })
             )
+            add(
+                MainListData.DataItem(
+                    title = "Location service",
+                    detail = "play location service",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_locationServiceFragment) })
+            )
+
+            add(
+                MainListData.DataItem(
+                    title = "Contact provider",
+                    detail = "play with content provider",
+                    action = { findNavController().navigate(R.id.action_mainFragment_to_contactListFragment) })
+            )
         }
         return list
     }

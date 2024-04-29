@@ -13,32 +13,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Request name"
-        app:layout_constraintEnd_toStartOf="@+id/requestTime"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintStart_toEndOf="@+id/requestTime"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/requestTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Request time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/requestName"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/scheduleTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cleanAll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/requestName" />
+
+    <Button
+        android:id="@+id/cleanAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scheduleTask"
+        app:layout_constraintTop_toBottomOf="@+id/requestName" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/downloadList"

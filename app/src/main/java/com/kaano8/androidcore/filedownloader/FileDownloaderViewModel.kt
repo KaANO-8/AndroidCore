@@ -10,18 +10,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FileDownloaderViewModel @Inject constructor(private val fileDownloadRepository: FileDownloadRepository) : ViewModel() {
-    fun scheduleTask(requestName: String, requestTime: Int) {
-        viewModelScope.launch {
-            fileDownloadRepository.insertTask(DownloadTask(name = requestName, time = requestTime, progress = (0..requestTime).random()))
-        }
-    }
-
+class FileDownloaderViewModel @Inject constructor(private val fileDownloadRepository: FileDownloadRepository) :
+    ViewModel() {
     fun getAllItems(): Flow<List<DownloadTask>> = fileDownloadRepository.getAllTasks()
 
-    fun markItemCompleted(downloadId: Int) {
+    fun clearAll() {
         viewModelScope.launch {
-            fileDownloadRepository.deleteTask(downloadId)
+            fileDownloadRepository.clearAll()
         }
     }
 }

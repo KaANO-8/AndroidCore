@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kaano8.androidcore.com.kaano8.androidcore.filedownloader.repository.model.DownloadTask
 
-class FileDownloadAdapter(private val onPause: (Int) -> Unit, private val onStop: (Int) -> Unit) :
+class FileDownloadAdapter(private val onPause: (Long) -> Unit, private val onStop: (Long) -> Unit) :
     ListAdapter<DownloadTask, RecyclerView.ViewHolder>(FileDiffUtil()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
